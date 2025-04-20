@@ -1,16 +1,17 @@
 import express from 'express';
-import quoteRoutes from './routes/budget.routes';
+import { connectToDatabase } from './config/database';
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Middleware para permitir o uso de JSON nas requisições
 app.use(express.json());
 
-// Definindo as rotas
-app.use('/api/quotes', quoteRoutes);
+connectToDatabase();
 
-// Inicializando o servidor
-const PORT = process.env.PORT || 3000;
+app.get('/', (req, res) => {
+  res.send('Mk Quote rodando 🚀');
+});
+
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
