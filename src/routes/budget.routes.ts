@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { createBudget, getBudgets } from '../controllers/budget.controller';
+import { createQuote, getQuotes } from '../controllers/budget.controller';
 
 const router = Router();
 
-router.post('/', createBudget);
-router.get('/', getBudgets);
+router.post('/quotes', createQuote);
+router.get('/quotes', getQuotes);
 
 export default router;

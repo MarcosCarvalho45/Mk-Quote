@@ -3,32 +3,19 @@ import { Quote } from '../models/Budget';
 
 export const createQuote = async (req: Request, res: Response) => {
   try {
-    const {
-      clientName,
-      clientEmail,
-      clientPhone,
-      serviceDescription,
-      estimatedTime,
-      total,
-      paymentConditions,
-      validity
-    } = req.body;
-
-    const quote = new Quote({
-      clientName,
-      clientEmail,
-      clientPhone,
-      serviceDescription,
-      estimatedTime,
-      total,
-      paymentConditions,
-      validity
-    });
-
-    await quote.save();
-
-    res.status(201).json(quote);
+    const newQuote = new Quote(req.body);
+    const savedQuote = await newQuote.save();
+    res.status(201).json(savedQuote);
   } catch (err) {
-    res.status(500).json({ error: 'Erro ao criar orçamento' });
+    res.status(500).json({ message: 'Erro ao criar orçamento', error: err });
+  }
+};
+
+export const getQuotes = async (_req: Request, res: Response) => {
+  try {
+    const quotes = await Quote.find();
+    res.status(200).json(quotes);
+  } catch (err) {
+    res.status(500).json({ message: 'Erro ao buscar orçamentos', error: err });
   }
 };

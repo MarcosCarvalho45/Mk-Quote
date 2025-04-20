@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import connect from './config/database'; // ajuste o caminho se estiver em outro diretório
 
 import clienteRoutes from './routes/client.routes';
+import budgetRoutes from './routes/budget.routes';
+
 
 dotenv.config();
 
@@ -19,6 +21,7 @@ connect();
 
 // Rotas
 app.use('/api', clienteRoutes);
+app.use('/api', budgetRoutes);
 
 // Inicializa servidor
 app.listen(PORT, () => {
