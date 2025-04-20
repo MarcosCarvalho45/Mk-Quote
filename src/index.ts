@@ -1,10 +1,16 @@
 import express from 'express';
-import clientRoutes from './routes/client.routes';
-import serviceRoutes from './routes/service.routes';
-import budgetRoutes from './routes/budget.routes';
+import quoteRoutes from './routes/budget.routes';
 
 const app = express();
 
-app.use('/api/clients', clientRoutes);
-app.use('/api/services', serviceRoutes);
-app.use('/api/budgets', budgetRoutes);
+// Middleware para permitir o uso de JSON nas requisições
+app.use(express.json());
+
+// Definindo as rotas
+app.use('/api/quotes', quoteRoutes);
+
+// Inicializando o servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
