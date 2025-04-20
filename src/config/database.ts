@@ -3,18 +3,22 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const connectToDatabase = async () => {
-  try {
-    const mongoUri = process.env.MONGO_URI;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD;
 
-    if (!mongoUri) {
-      throw new Error("MONGO_URI não encontrada no .env");
-    }
+const connect = () => {
 
-    await mongoose.connect(mongoUri);
-    console.log("🚀 MongoDB conectado com sucesso!");
-  } catch (error) {
-    console.error("❌ Erro ao conectar ao MongoDB:", error);
-    process.exit(1);
-  }
-};
+        mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster45.nw9hcqc.mongodb.net/MkQuote?retryWrites=true&w=majority`);
+
+    const connection = mongoose.connection;
+
+    connection.on('error', () => {
+        console.log('Erro ao conectar ao banco de dados');
+    });
+
+    connection.on('open', () => {
+        console.log('Banco de dados conectado com sucesso');
+    });
+}
+
+export default connect;
